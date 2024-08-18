@@ -1,26 +1,43 @@
 import MagnifyingGlassIcon from '@heroicons/react/24/solid/MagnifyingGlassIcon';
-import React from 'react'
+import React, { ChangeEvent, useState } from 'react'
 
 
 interface WeatherFormProps {
     cep: string;
     location: string;
+    isCepInvalid:boolean;
+    isLocationInvalid:boolean;
     setCep: React.Dispatch<React.SetStateAction<string>>;
     setLocation: React.Dispatch<React.SetStateAction<string>>;
+    setIsCepInvalid: React.Dispatch<React.SetStateAction<boolean>>;
     fetchWeather: () => void;
     fetchLocation: () => void;
 }
 
-const WeatherForm = ({cep,location,setCep,setLocation,fetchWeather,fetchLocation}:WeatherFormProps) => {
-    
+const WeatherForm = ({cep,location,isCepInvalid,isLocationInvalid,setCep,setLocation,fetchWeather,setIsCepInvalid,fetchLocation}:WeatherFormProps) => {
+
     function handleFindWeather(e:React.MouseEvent) {
         e.preventDefault();
         fetchWeather();
     }
 
+    function handleCepChange(e:React.ChangeEvent<HTMLInputElement>){
+        setCep(e.target.value);
+        setIsCepInvalid(false);
+    }
+
+    const isValidCep = (cep: string): boolean => {
+        const regex = /^([0-9]{5}-[0-9]{3}|[0-9]{8})$/;
+        return regex.test(cep);
+    };
+    
+
     function handleCep(){
-        if(cep!=''){ // Melhorar isso com uma validação do cep
+        console.log(cep);
+        if(isValidCep(cep)){ 
             fetchLocation();
+        }else{
+            setIsCepInvalid(true);
         }
     }
 
@@ -32,14 +49,14 @@ const WeatherForm = ({cep,location,setCep,setLocation,fetchWeather,fetchLocation
                         <input
                             type='text'
                             placeholder='00000-000'
-                            className='form-control'
+                            className={`form-control ${isCepInvalid ? 'is-invalid' : ''}`}
                             id='cep'
                             name='cep'
                             value={cep}
-                            onChange={(e) => setCep(e.target.value)}
+                            onChange={(e) => handleCepChange(e)}
                             onBlur={handleCep}
                         />
-                        <label htmlFor='cep'>CEP</label>
+                        <label htmlFor='cep'>CEP</label>                       
                     </div>
                 </div>
                 <div className='col-md-5 col-5'>
@@ -47,7 +64,7 @@ const WeatherForm = ({cep,location,setCep,setLocation,fetchWeather,fetchLocation
                         <input
                             type='text'
                             placeholder='Chapecó'
-                            className='form-control'
+                            className={`form-control ${isLocationInvalid ? 'is-invalid' : ''}`}
                             id='location'
                             name='location'
                             value={location}

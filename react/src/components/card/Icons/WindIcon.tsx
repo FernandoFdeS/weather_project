@@ -1,5 +1,3 @@
-import React from 'react';
-
 import {
     WiDirectionUp,
     WiDirectionUpRight,
@@ -17,8 +15,6 @@ interface WindIconProps {
 
 const WindIcon = ({ windDirection }:WindIconProps) => {
     const direction = windDirection.slice(0, 2).toUpperCase();
-    console.log(windDirection);
-    console.log(direction);
     switch (direction) {
         case 'NN':
         case 'N':
