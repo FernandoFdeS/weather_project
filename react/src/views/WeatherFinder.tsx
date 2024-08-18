@@ -1,17 +1,27 @@
 import { MagnifyingGlassIcon, StarIcon } from '@heroicons/react/24/solid'
 import {  StarIcon as OutlineStarIcon } from '@heroicons/react/24/outline'
 import React, { useState } from 'react'
-import { WiDirectionDown, WiHumidity, WiStrongWind, WiSunrise, WiThermometer, WiThermometerExterior } from 'react-icons/wi';
+import { WiDirectionDown, WiHumidity, WiRaindrops, WiStrongWind, WiSunrise, WiThermometer, WiThermometerExterior } from 'react-icons/wi';
 
 const WeatherFinder = () => {
 
     const [cep,setCep] = useState ('');
     const [location,setLocation] = useState ('');
+    const [weatherData,setWeatherData] = useState<any>(null);
 
     async function fetchWeatherFromLocation(){
         const apiKey = import.meta.env.VITE_REACT_APP_WEATHERSTACK_API_KEY ;
         const url = `http://api.weatherstack.com/current?access_key=${apiKey}&query=${location}`;
+        setWeatherData(null);
         console.log(url);
+        try{
+            const res = await fetch(url);
+            const data = await res.json();
+            setWeatherData(data);
+            console.log(weatherData); 
+        }catch(e){
+            console.log(`Erro: ${e}`);
+        }
     }
 
     function handleFindWeather(e:React.MouseEvent){
@@ -20,12 +30,16 @@ const WeatherFinder = () => {
     }
 
     async function fetchLoactionFromCep(){
-        const res = await fetch(`https://viacep.com.br/ws/${cep}/json`);
-        const data = await res.json();
-        if(data['localidade']){
-            setLocation(data['localidade']);
-        }else{
-            console.log("Toast avisando que não deu boa.")
+        try{
+            const res = await fetch(`https://viacep.com.br/ws/${cep}/json`);
+            const data = await res.json();
+            if(data['localidade']){
+                setLocation(data['localidade']);
+            }else{
+                console.log("Toast avisando que não deu boa.")
+            }
+        }catch(e){
+            console.log(`Erro: ${e}`);
         }
     }
 
@@ -39,6 +53,7 @@ const WeatherFinder = () => {
         e.preventDefault()
         console.log(`Adicionando ${location} aos favoritos`);
     }
+
     
     return (
         <div className='wf_container'>
@@ -72,38 +87,59 @@ const WeatherFinder = () => {
                     </div>                    
                 </form>
             </div>
-            {location && 
+            {weatherData && 
                 <div className='wf_content'>
                     <div className='wf_content__location'>
                         <div>
-                            <h3 className='wf_content__location_title'>{location}</h3>
-                            <p className='wf_content__location_weather_description'>Descrição do tempo</p>
+                            <h3 className='wf_content__location_title'>{weatherData?.request?.query}</h3>
+                            <p className='wf_content__location_weather_description'>{weatherData?.current?.weather_descriptions}</p>
                         </div>                        
                         <WiSunrise size={36} />                        
                     </div>
                     <div className='wf_content__weather_info'>
                         <div className='wf_content__weather_card'>
-                            <WiThermometer size={72}/>
+                            <div className='wf_content__weather_card_wrap'>
+                                <WiThermometer size={72}/>
+                                <p className='weather_card__text'>
+                                    {weatherData?.current?.temperature}°C
+                                </p>
+                            </div>
                             <p className='info_text'>Temperatura</p>
                         </div>
                         <div className='wf_content__weather_card'>
-                            <WiHumidity size={72}/>
+                            <div className='wf_content__weather_card_wrap'>
+                                <WiHumidity size={72}/>
+                                <p className='weather_card__text'>
+                                    {weatherData?.current?.humidity}
+                                </p>
+                            </div>
                             <p className='info_text'>Umidade</p>
                         </div>
                         <div className='wf_content__weather_card'>
-                            <WiThermometerExterior size={72}/>
+                            <div className='wf_content__weather_card_wrap'>
+                                <WiThermometerExterior size={72}/>
+                                <p className='weather_card__text'>
+                                    {weatherData?.current?.feelslike}°C
+                                </p>
+                            </div>                            
                             <p className='info_text'>Sensação térmica</p>
                         </div>
                         <div className='wf_content__weather_card'>
-                            <WiStrongWind size={72}/>
-                            <p className='info_text'>Vento</p>
+                            <div className='wf_content__weather_card_wrap'>
+                                <WiRaindrops size={72}/>
+                                <p className='weather_card__text'>
+                                    {weatherData?.current?.precip} <small className='text-muted'>mm</small>
+                                </p>
+                            </div>   
+                            <p className='info_text'>Precipitaçao</p>
                         </div>
                         <div className='wf_content__weather_card'>
                             <WiDirectionDown size={72}/>
                             <p className='info_text'>Direção do vento</p>
                         </div>
                         <div className='wf_content__weather_card'>
-                            <p className='wind_speed'>XX km/h</p>
+                            <p className='weather_card__text'>
+                                {weatherData?.current?.wind_speed} <small className='text-muted'>km/h</small></p>
                             <p className='info_text'>Velocidade do vento</p>
                         </div>
                     </div>

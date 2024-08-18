@@ -6,12 +6,13 @@
 
 :root{
   --button-background: #AD49E1;
+  --button-background-hover: #7A1CAC;
 }
 
 #root{
   display: flex;
-  align-items: center;
   justify-content: center;
+  height: 100dvh;
 }
 
 body{
@@ -57,6 +58,10 @@ body{
   background-color: gray;
 }
 
+.button:hover{
+  background-color: var(--button-background-hover);
+}
+
 .wf_header__button{
   height: 40px;
   width: 40px;
@@ -66,7 +71,6 @@ body{
 }
 
 .wf_form{
-  background-color: aquamarine;
   margin-top: 10px;
   border-radius: 5px;
   background: rgba( 255, 255, 255, 0.25 );
@@ -104,7 +108,7 @@ body{
 }
 
 .wf_content__location_title{
-  font-size: 50px;
+  font-size: 42px;
   font-weight: 300;
   margin-bottom:0px;
   margin-right:10px;
@@ -125,7 +129,7 @@ body{
 }
 
 .wf_content__weather_card{
-  background-color: aliceblue;
+  
   min-width: 100px;
   height: 145px;
   border-radius: 5px;
@@ -133,7 +137,11 @@ body{
   display: flex;
   flex-direction: column;
   justify-content: center;
-  text-align: center;
+  background: rgba( 255, 255, 255, 0.25 );
+  box-shadow: 0 2px 2px 0 rgba( 31, 38, 135, 0.37 );
+  backdrop-filter: blur( 5.5px );
+  -webkit-backdrop-filter: blur( 5.5px );
+  border: 1px solid rgba( 255, 255, 255, 0.18 );
 }
 
 .info_text{
@@ -149,10 +157,21 @@ body{
   align-items:center;
 }
 
-.wind_speed{
-  font-size: 38px;
+.weather_card__text{
+  font-size: 2em;
+  margin: 0;
 }
 
+.weather_card__text small{
+  font-size: 18px;
+  margin: 0;
+}
+
+.wf_content__weather_card_wrap{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 @media (max-width: 420px) {
   .wf_header{
