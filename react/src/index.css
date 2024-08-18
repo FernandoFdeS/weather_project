@@ -1,68 +1,77 @@
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+:root{
+  --button-background: #AD49E1;
 }
 
-body {
-  margin: 0;
+body{
   display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  justify-content: center;
+  width: 100%;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+.wf_container{
+  width: min(1025px,90%);
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+.wf_header{
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  margin-top: 100px;
+  align-items: center;
+  position: relative;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+.wf_header__title{
+  font-size: 40px;
+  font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-weight: 400;
+}
+
+.wf_header__title--bold{
+  font-weight: 600;
+}
+
+.button{
+  font-size: 14px;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: var(--button-background);
+  transition: ease 0.4s;
+}
+
+.button:disabled{
+  background-color: gray;
+}
+
+.wf_header__button{
+  height: 40px;
+  width: 40px;
+  position: absolute;
+  right: 0px;
+  margin-right: 4px;
+}
+
+.wf_form{
+  background-color: aquamarine;
+  margin-top: 10px;
+  border-radius: 5px;
+  background: rgba( 255, 255, 255, 0.25 );
+  box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+  backdrop-filter: blur( 5.5px );
+  -webkit-backdrop-filter: blur( 5.5px );
+  border: 1px solid rgba( 255, 255, 255, 0.18 );
+  padding-bottom: 0px;
+}
+
+.wf_form__button{
+  height: 50px;
+  width: 50px;
 }
