@@ -1,7 +1,7 @@
 import { MagnifyingGlassIcon, StarIcon } from '@heroicons/react/24/solid'
 import {  StarIcon as OutlineStarIcon } from '@heroicons/react/24/outline'
 import React, { useState } from 'react'
-import { WiDirectionDown, WiHumidity, WiRaindrops, WiStrongWind, WiSunrise, WiThermometer, WiThermometerExterior } from 'react-icons/wi';
+import { WiCloud, WiDayCloudy, WiDayHaze, WiDayShowers, WiDaySunny, WiDirectionDown, WiDirectionDownLeft, WiDirectionDownRight, WiDirectionLeft, WiDirectionRight, WiDirectionUp, WiDirectionUpLeft, WiDirectionUpRight, WiFog, WiHumidity, WiRain, WiRaindrops, WiStrongWind, WiSunrise, WiThermometer, WiThermometerExterior } from 'react-icons/wi';
 
 const WeatherFinder = () => {
 
@@ -54,6 +54,59 @@ const WeatherFinder = () => {
         console.log(`Adicionando ${location} aos favoritos`);
     }
 
+    function windIcon(windDirection:string){
+        const direction = windDirection.slice(0, 2).toUpperCase(); //Pegando somente as duas primeiras letras da direção por causa da limitação dos icones.
+        console.log(direction);
+        switch (direction) {
+            case 'NN':
+            case 'N':             
+                return <WiDirectionUp size={72} />;
+            case 'NE':
+              return <WiDirectionUpRight size={72}/>;
+            case 'E':
+              return <WiDirectionRight size={72}/>;
+            case 'SE':
+              return <WiDirectionDownRight size={72}/>;
+            case 'SS':
+            case 'S':
+              return <WiDirectionDown size={72}/>;
+            case 'SW':
+              return <WiDirectionDownLeft size={72}/>;
+            case 'W':
+              return <WiDirectionLeft size={72}/>;
+            case 'NW':
+              return <WiDirectionUpLeft size={72}/>;
+            default:
+              return null; // Caso não seja uma direção válida
+          }
+    }
+
+    function getWeatherIcon(description:string) {
+        const desc = description.toLowerCase();
+      
+        switch (desc) {
+          case 'clear':
+          case 'sunny':
+            return <WiDaySunny size={42}/>;
+          case 'partly cloudy':
+            return <WiDayCloudy size={42}/>;
+          case 'overcast':
+            return <WiCloud size={42}/>;
+          case 'haze':
+            return <WiDayHaze size={42}/>;
+          case 'moderate rain':
+          case 'light rain':
+            return <WiRain size={42}/>;
+          case 'patchy rain nearby':
+          case 'light rain shower':
+            return <WiDayShowers size={42}/>;
+          case 'mist':
+            return <WiFog size={42}/>;
+          default:
+            return null; // Para condições não cobertas
+        }
+      }
+
     
     return (
         <div className='wf_container'>
@@ -93,8 +146,8 @@ const WeatherFinder = () => {
                         <div>
                             <h3 className='wf_content__location_title'>{weatherData?.request?.query}</h3>
                             <p className='wf_content__location_weather_description'>{weatherData?.current?.weather_descriptions}</p>
-                        </div>                        
-                        <WiSunrise size={36} />                        
+                        </div>
+                        {getWeatherIcon(weatherData?.current?.weather_descriptions[0])}                    
                     </div>
                     <div className='wf_content__weather_info'>
                         <div className='wf_content__weather_card'>
@@ -134,7 +187,7 @@ const WeatherFinder = () => {
                             <p className='info_text'>Precipitaçao</p>
                         </div>
                         <div className='wf_content__weather_card'>
-                            <WiDirectionDown size={72}/>
+                            {windIcon(weatherData?.current?.wind_dir)}
                             <p className='info_text'>Direção do vento</p>
                         </div>
                         <div className='wf_content__weather_card'>
