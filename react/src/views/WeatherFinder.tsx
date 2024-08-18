@@ -1,5 +1,7 @@
 import { MagnifyingGlassIcon, StarIcon } from '@heroicons/react/24/solid'
+import {  StarIcon as OutlineStarIcon } from '@heroicons/react/24/outline'
 import React, { useState } from 'react'
+import { WiDirectionDown, WiHumidity, WiStrongWind, WiSunrise, WiThermometer, WiThermometerExterior } from 'react-icons/wi';
 
 const WeatherFinder = () => {
 
@@ -17,8 +19,6 @@ const WeatherFinder = () => {
         fetchWeatherFromLocation();
     }
 
-    //console.log(import.meta.env.VITE_REACT_APP_WEATHERSTACK_API_KEY);
-
     async function fetchLoactionFromCep(){
         const res = await fetch(`https://viacep.com.br/ws/${cep}/json`);
         const data = await res.json();
@@ -33,6 +33,11 @@ const WeatherFinder = () => {
         if(cep!=''){ // Melhorar isso com uma validação do cep
             fetchLoactionFromCep();
         }
+    }
+
+    function handleAddFavorite(e:React.MouseEvent){
+        e.preventDefault()
+        console.log(`Adicionando ${location} aos favoritos`);
     }
     
     return (
@@ -67,6 +72,51 @@ const WeatherFinder = () => {
                     </div>                    
                 </form>
             </div>
+            {location && 
+                <div className='wf_content'>
+                    <div className='wf_content__location'>
+                        <div>
+                            <h3 className='wf_content__location_title'>{location}</h3>
+                            <p className='wf_content__location_weather_description'>Descrição do tempo</p>
+                        </div>                        
+                        <WiSunrise size={36} />                        
+                    </div>
+                    <div className='wf_content__weather_info'>
+                        <div className='wf_content__weather_card'>
+                            <WiThermometer size={72}/>
+                            <p className='info_text'>Temperatura</p>
+                        </div>
+                        <div className='wf_content__weather_card'>
+                            <WiHumidity size={72}/>
+                            <p className='info_text'>Umidade</p>
+                        </div>
+                        <div className='wf_content__weather_card'>
+                            <WiThermometerExterior size={72}/>
+                            <p className='info_text'>Sensação térmica</p>
+                        </div>
+                        <div className='wf_content__weather_card'>
+                            <WiStrongWind size={72}/>
+                            <p className='info_text'>Vento</p>
+                        </div>
+                        <div className='wf_content__weather_card'>
+                            <WiDirectionDown size={72}/>
+                            <p className='info_text'>Direção do vento</p>
+                        </div>
+                        <div className='wf_content__weather_card'>
+                            <p className='wind_speed'>XX km/h</p>
+                            <p className='info_text'>Velocidade do vento</p>
+                        </div>
+                    </div>
+                    <div>
+                        <button className='button add_fav_button' onClick={(e)=>{handleAddFavorite(e)}}>
+                            
+                            <p className='m-2'>Adicionar aos favoritos</p>
+                           
+                            <OutlineStarIcon width={20}/>
+                        </button>
+                    </div>
+                </div>
+            }
         </div>
     )
 }

@@ -8,6 +8,12 @@
   --button-background: #AD49E1;
 }
 
+#root{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 body{
   display: flex;
   justify-content: center;
@@ -64,7 +70,7 @@ body{
   margin-top: 10px;
   border-radius: 5px;
   background: rgba( 255, 255, 255, 0.25 );
-  box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+  box-shadow: 0 2px 4px 0 rgba( 31, 38, 135, 0.37 );
   backdrop-filter: blur( 5.5px );
   -webkit-backdrop-filter: blur( 5.5px );
   border: 1px solid rgba( 255, 255, 255, 0.18 );
@@ -74,4 +80,82 @@ body{
 .wf_form__button{
   height: 50px;
   width: 50px;
+}
+
+.wf_content{ 
+  z-index: 2;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px ;
+  height: fit-content;
+  padding-bottom: 10px;
+  background: rgba( 255, 255, 255, 0.35 );
+  box-shadow: 0 4px 16px 0 rgba( 31, 38, 135, 0.37 );
+  backdrop-filter: blur( 7px );
+  -webkit-backdrop-filter: blur( 7px );
+}
+
+.wf_content__location{
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+}
+
+.wf_content__location_title{
+  font-size: 50px;
+  font-weight: 300;
+  margin-bottom:0px;
+  margin-right:10px;
+}
+
+.wf_content__location_weather_description{
+    font-size: 15px;
+    margin-top: -10px;
+    font-style: italic;
+    opacity: 80%;
+}
+
+.wf_content__weather_info{
+  padding: 10px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+  gap: 10px;
+}
+
+.wf_content__weather_card{
+  background-color: aliceblue;
+  min-width: 100px;
+  height: 145px;
+  border-radius: 5px;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+.info_text{
+  color: grey;
+  font-size: 12px;
+}
+
+.add_fav_button{
+  width: 96%;
+  margin-left: 2%;
+  display: flex;
+  justify-content: center;
+  align-items:center;
+}
+
+.wind_speed{
+  font-size: 38px;
+}
+
+
+@media (max-width: 420px) {
+  .wf_header{
+    margin-top: 20px;
+  }
 }
