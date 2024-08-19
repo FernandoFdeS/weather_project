@@ -5,29 +5,30 @@ import { WiDaySunny, WiDayCloudy, WiCloud, WiDayHaze, WiRain, WiDayShowers, WiFo
 
 interface WeatherIconProps {
     description: string;
+    size: number;
 }
 
-const WeatherIcon = ({ description }:WeatherIconProps) => {
+const WeatherIcon = ({ description,size }:WeatherIconProps) => {
     const desc = description.toLowerCase();
       
     switch (desc) {
         case 'clear':
         case 'sunny':
-        return <WiDaySunny size={42}/>;
+        return <WiDaySunny size={size}/>;
           case 'partly cloudy':
-            return <WiDayCloudy size={42}/>;
+            return <WiDayCloudy size={size}/>;
           case 'overcast':
-            return <WiCloud size={42}/>;
+            return <WiCloud size={size}/>;
           case 'haze':
-            return <WiDayHaze size={42}/>;
+            return <WiDayHaze size={size}/>;
           case 'moderate rain':
           case 'light rain':
-            return <WiRain size={42}/>;
+            return <WiRain size={size}/>;
           case 'patchy rain nearby':
           case 'light rain shower':
-            return <WiDayShowers size={42}/>;
+            return <WiDayShowers size={size}/>;
           case 'mist':
-            return <WiFog size={42}/>;
+            return <WiFog size={size}/>;
           default:
             return null; // Para condições não cobertas
         }

@@ -18,7 +18,7 @@ const WeatherInfo = ({weatherData,handleAddFavorite}:WeatherInfoProps) => {
                             <h3 className='wf_content__location_title'>{weatherData?.request?.query}</h3>
                             <p className='wf_content__location_weather_description'>{weatherData?.current?.weather_descriptions}</p>
                         </div>
-                        <WeatherIcon description={weatherData?.current?.weather_descriptions[0]}/>                   
+                        <WeatherIcon description={weatherData?.current?.weather_descriptions[0]} size={42}/>                   
                     </div>
                     <div className='wf_content__weather_info'>
                         <WeatherCard icon={<WiThermometer size={72} />} label='Temperatura' value={`${weatherData?.current?.temperature}°C`} />
