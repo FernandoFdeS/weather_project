@@ -1,13 +1,37 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import WeatherHeader from '../components/header/Header'
-import { MagnifyingGlassIcon, TrashIcon } from '@heroicons/react/24/solid'
 import { WiThermometer } from 'react-icons/wi';
+import axiosClient from '../axios';
+import FavoriteItem from '../components/favorite-item/FavoriteItem';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 type ViewMode = 'favorites' | 'compare';
 
 const FavoriteLocations = () => {
     const [viewMode, setViewMode] = useState<ViewMode>('favorites'); 
+    const [favorites,setFavorites] = useState<Array<any>>([]);
 
+    
+    useEffect(()=>{
+        fetchFavorites();
+    },[]);
+    
+    function fetchFavorites (){
+        axiosClient.get('/locations')
+        .then(({data})=>{
+            console.log(data);
+            setFavorites(data);
+            console.log(favorites);
+        })
+        .catch(({response})=>{
+            console.log(response);
+        });
+    }
+
+    function removeFavoriteFromArray(id:number){
+        setFavorites(prevFavorites => prevFavorites.filter(item => item.id !== id));
+    }
 
     return (
         <div className='favorites_containter'>
@@ -24,13 +48,14 @@ const FavoriteLocations = () => {
 
             { viewMode==='favorites' &&
                 <div className='favorites_list row'>
-                    <div className='favorite_list__item col-12 mt-2'>
-                        <span> 1 | Localidade</span>
-                        <div className='favorite_list__item_buttons'>
-                            <button className='button'><MagnifyingGlassIcon width={18}/></button>
-                            <button className='del_button button'><TrashIcon width={18}/></button>
-                        </div>
-                    </div>
+                    {
+                        favorites && favorites.length  ?
+                        favorites.map((item)=>(
+                                <FavoriteItem key={item.id} location={item.location} id={item.id} removeFavoriteFromArray={removeFavoriteFromArray}/>                               
+                            ))
+                        : null
+                    }
+                    
                 </div>
             }
             { viewMode==='compare' &&
@@ -62,7 +87,7 @@ const FavoriteLocations = () => {
 
             </div>
         }
-
+        <ToastContainer />
         </div>
     )
 }

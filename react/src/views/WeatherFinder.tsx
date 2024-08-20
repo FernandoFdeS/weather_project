@@ -62,12 +62,7 @@ const WeatherFinder = () => {
         }catch(e){
             console.log(`Erro: ${e}`);
         }
-    }    
-
-    function handleAddFavorite(e:React.MouseEvent):void{
-        e.preventDefault()
-        console.log(`Adicionando ${location} aos favoritos`);
-    }    
+    }     
     
     return (
         <div className='wf_container'>
@@ -83,7 +78,7 @@ const WeatherFinder = () => {
                 fetchWeather={fetchWeatherFromLocation}
                 fetchLocation={fetchLocationFromCep}
             />
-            {weatherData && <WeatherInfo weatherData={weatherData} handleAddFavorite={handleAddFavorite} />}
+            {weatherData && <WeatherInfo weatherData={weatherData}/>}
             <ToastContainer />
         </div>
     )
