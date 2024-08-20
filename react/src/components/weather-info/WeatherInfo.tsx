@@ -86,11 +86,6 @@ const WeatherInfo = ({weatherData}:WeatherInfoProps) => {
         });
     }
 
-
-    function handleDeleteFavorite(e:React.MouseEvent){
-        e.preventDefault();
-    }
-
     return (
         <div className='wf_content'>
             <div className='wf_content__location'>

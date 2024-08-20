@@ -18,6 +18,11 @@ const WeatherForm = ({cep,location,weatherData,setCep,setLocation,setWeatherData
     const [isCepInvalid, setIsCepInvalid] = useState<boolean>(false);
     const [isLocationInvalid, setIsLocationInvalid] = useState<boolean>(false);
 
+    const isValidCep = (cep: string): boolean => {
+        const regex = /^([0-9]{5}-[0-9]{3}|[0-9]{8})$/;
+        return regex.test(cep);
+    };
+
     async function fetchWeatherFromLocation(){
         const apiKey = import.meta.env.VITE_REACT_APP_WEATHERSTACK_API_KEY ;
         const url = `http://api.weatherstack.com/current?access_key=${apiKey}&query=${location}`;
@@ -55,7 +60,9 @@ const WeatherForm = ({cep,location,weatherData,setCep,setLocation,setWeatherData
             const data = await res.json();
             if(data.localidade){
                 setLocation(data.localidade);
-                setIsLocationInvalid(false);
+                setIsLocationInvalid(false);                
+            }else{
+                setIsCepInvalid(true); 
                 toast.error('CEP não encontrado.', {
                     position: "bottom-right",
                     autoClose: 3000,
@@ -63,9 +70,7 @@ const WeatherForm = ({cep,location,weatherData,setCep,setLocation,setWeatherData
                     progress: undefined,
                     theme: "light",
                     transition: Bounce,
-                });
-            }else{
-                setIsCepInvalid(true);                
+                });               
             }
         }catch(e){
             console.log(`Erro: ${e}`);
@@ -81,12 +86,10 @@ const WeatherForm = ({cep,location,weatherData,setCep,setLocation,setWeatherData
         setCep(e.target.value);
         setIsCepInvalid(false);
     }
-
-    const isValidCep = (cep: string): boolean => {
-        const regex = /^([0-9]{5}-[0-9]{3}|[0-9]{8})$/;
-        return regex.test(cep);
-    };
     
+    function handleBlur(){
+        setCep('');
+    }
 
     function handleCep(){
         if(isValidCep(cep)){ 
@@ -123,6 +126,7 @@ const WeatherForm = ({cep,location,weatherData,setCep,setLocation,setWeatherData
                             id='location'
                             name='location'
                             value={location}
+                            onBlur={handleBlur}
                             onChange={(e) => setLocation(e.target.value)}
                         />
                         <label htmlFor='location'>Cidade</label>

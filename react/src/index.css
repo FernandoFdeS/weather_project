@@ -25,7 +25,7 @@ body{
   width: min(1025px,90%);
 }
 
-.wf_header{
+.header{
   z-index: 1;
   display: flex;
   justify-content: center;
@@ -34,13 +34,13 @@ body{
   position: relative;
 }
 
-.wf_header__title{
+.header__title{
   font-size: 40px;
   font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
   font-weight: 400;
 }
 
-.wf_header__title--bold{
+.header__title--bold{
   font-weight: 600;
 }
 
@@ -70,7 +70,7 @@ body{
   background-color: rgb(197, 69, 69) !important;
 }
 
-.wf_header__button{
+.header__button{
   height: 40px;
   width: 40px;
   display: flex;
@@ -372,7 +372,7 @@ body{
 }
 
 @media (max-width: 420px) {
-  .wf_header__button{
+  .header__button{
     position: relative;
   }
 }

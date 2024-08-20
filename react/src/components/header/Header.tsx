@@ -7,17 +7,17 @@ const WeatherHeader = () => {
     const path = useLocation();
 
     return(
-        <div className='wf_header'>
-            <h3 className='wf_header__title'>
-                Weather<span className='wf_header__title--bold'>APP</span>
+        <div className='header'>
+            <h3 className='header__title'>
+                Weather<span className='header__title--bold'>APP</span>
             </h3>
            
                 {path.pathname == "/" ?
-                    <Link to="/favorite" className='wf_header__button button'>
+                    <Link to="/favorite" className='header__button button'>
                         <VscThreeBars color='white'/>
                     </Link>
                     :
-                    <Link to="/"  className='wf_header__button button'>
+                    <Link to="/"  className='header__button button'>
                         <MagnifyingGlassIcon color='white'/>
                     </Link>
                 }
