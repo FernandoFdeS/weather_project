@@ -11,17 +11,17 @@ const WeatherHeader = () => {
             <h3 className='wf_header__title'>
                 Weather<span className='wf_header__title--bold'>APP</span>
             </h3>
-            <button className='wf_header__button button'>
+           
                 {path.pathname == "/" ?
-                    <Link to="/favorite">
+                    <Link to="/favorite" className='wf_header__button button'>
                         <VscThreeBars color='white'/>
                     </Link>
                     :
-                    <Link to="/">
+                    <Link to="/"  className='wf_header__button button'>
                         <MagnifyingGlassIcon color='white'/>
                     </Link>
                 }
-            </button>
+            
         </div>
     )
 };

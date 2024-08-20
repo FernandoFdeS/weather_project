@@ -9,6 +9,10 @@ const FavoriteInfoSkeleton = () => {
             <span className='card_badge_skeleton pulse'></span>
             <span className='card_badge_skeleton pulse'></span>
             <span className='card_badge_skeleton pulse'></span>
+            <span className='card_badge_skeleton pulse'></span>
+            <span className='card_badge_skeleton pulse'></span>
+            <span className='card_badge_skeleton pulse'></span>
+            <span className='card_badge_skeleton pulse'></span>
         </div>
     )
 }

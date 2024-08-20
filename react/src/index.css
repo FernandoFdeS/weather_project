@@ -29,7 +29,7 @@ body{
   z-index: 1;
   display: flex;
   justify-content: center;
-  margin-top: 100px;
+  margin-top: 10px;
   align-items: center;
   position: relative;
 }
@@ -73,6 +73,9 @@ body{
 .wf_header__button{
   height: 40px;
   width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: absolute;
   right: 0px;
   margin-right: 4px;
@@ -166,13 +169,13 @@ body{
 }
 
 .weather_card__text{
-  font-size: 2em;
+  font-size: 1.7em;
   margin: 0;
 }
 
 .weather_card__text small{
-  font-size: 18px;
-  margin: 0;
+  font-size: 15px;
+  margin-left: -6px;
 }
 
 .wf_content__weather_card_wrap{
@@ -353,10 +356,6 @@ body{
   height: 140px;
 }
 
-.add_fav_button_skeleton{
-
-}
-
 @keyframes pulse {
   0% {
     background-position: 0% 0%;
@@ -373,10 +372,6 @@ body{
 }
 
 @media (max-width: 420px) {
-  .wf_header{
-    margin-top: 20px;
-  }
-
   .wf_header__button{
     position: relative;
   }

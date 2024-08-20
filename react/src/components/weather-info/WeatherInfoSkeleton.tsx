@@ -18,6 +18,9 @@ const WeatherInfoSkeleton = () => {
                 <div className="wf_content__weather_card_skeleton pulse"></div>
                 <div className="wf_content__weather_card_skeleton pulse"></div>
                 <div className="wf_content__weather_card_skeleton pulse"></div>
+                <div className="wf_content__weather_card_skeleton pulse"></div>
+                <div className="wf_content__weather_card_skeleton pulse"></div>
+                <div className="wf_content__weather_card_skeleton pulse"></div>
             </div>
             <div>
                 <button className='button add_fav_button pulse' style={{height:'57px'}}>
