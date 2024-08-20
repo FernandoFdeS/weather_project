@@ -15,7 +15,6 @@ const WeatherIcon = ({ description,size,isDay }:WeatherIconProps) => {
     }
 
     const desc = description.trim().toLowerCase();
-    console.log(isDay);
     switch (desc) {
       case 'clear':
       case 'sunny':

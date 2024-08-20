@@ -1,5 +1,5 @@
 import React from 'react'
-import WeatherIcon from '../card/Icons/WeatherIcon';
+import WeatherIcon from '../card/icons/WeatherIcon';
 import { WiThermometer, WiHumidity, WiThermometerExterior, WiRaindrops, WiDaySunny, WiHot, WiBarometer } from 'react-icons/wi';
 import WeatherCard from '../card/Card';
 import { HeartIcon } from '@heroicons/react/24/outline';
@@ -15,7 +15,6 @@ const WeatherInfo = ({weatherData}:WeatherInfoProps) => {
 
     function handleAddFavorite(e:React.MouseEvent){
         e.preventDefault();
-        console.log(weatherData?.location?.name);
 
         axiosClient.post('/locations',{
             location: weatherData?.location?.name
@@ -31,10 +30,8 @@ const WeatherInfo = ({weatherData}:WeatherInfoProps) => {
                         transition: Bounce,
                     });
                 }
-                console.log(data);
             })
             .catch((error)=>{
-                console.log(error);
                 toast.info(error.response.data.message, {
                     position: "bottom-right",
                     autoClose: 3000,

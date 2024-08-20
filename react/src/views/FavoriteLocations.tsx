@@ -24,13 +24,10 @@ const FavoriteLocations = () => {
         setIsLoadignFavorites(true);
         axiosClient.get('/locations')
         .then(({data})=>{
-            console.log(data);
             setFavorites(data);
-            console.log(favorites);
             setIsLoadignFavorites(false);
         })
         .catch(({response})=>{
-            console.log(response);
             setIsLoadignFavorites(false);
         });
     }

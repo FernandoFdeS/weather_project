@@ -1,24 +1,80 @@
 import MagnifyingGlassIcon from '@heroicons/react/24/solid/MagnifyingGlassIcon';
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
+import { Bounce, toast } from 'react-toastify';
 
 
 interface WeatherFormProps {
     cep: string;
     location: string;
-    isCepInvalid:boolean;
-    isLocationInvalid:boolean;
+    weatherData: any;
     setCep: React.Dispatch<React.SetStateAction<string>>;
     setLocation: React.Dispatch<React.SetStateAction<string>>;
-    setIsCepInvalid: React.Dispatch<React.SetStateAction<boolean>>;
-    fetchWeather: () => void;
-    fetchLocation: () => void;
+    setWeatherData: React.Dispatch<React.SetStateAction<any>>;
+    setIsLoadingData: React.Dispatch<React.SetStateAction<boolean>>;
+    setShouldShowInfo: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const WeatherForm = ({cep,location,isCepInvalid,isLocationInvalid,setCep,setLocation,fetchWeather,setIsCepInvalid,fetchLocation}:WeatherFormProps) => {
+const WeatherForm = ({cep,location,weatherData,setCep,setLocation,setWeatherData,setIsLoadingData,setShouldShowInfo}:WeatherFormProps) => {
+    const [isCepInvalid, setIsCepInvalid] = useState<boolean>(false);
+    const [isLocationInvalid, setIsLocationInvalid] = useState<boolean>(false);
+
+    async function fetchWeatherFromLocation(){
+        const apiKey = import.meta.env.VITE_REACT_APP_WEATHERSTACK_API_KEY ;
+        const url = `http://api.weatherstack.com/current?access_key=${apiKey}&query=${location}`;
+        setWeatherData(null);
+        setIsLoadingData(true);
+        setShouldShowInfo(true);
+        try{
+            const res = await fetch(url);
+            const data = await res.json();
+            if(data.success!==false){
+                setIsLocationInvalid(false);
+                setWeatherData(data);
+            } else{
+                setShouldShowInfo(false)
+                setIsLocationInvalid(true);
+                toast.error('Cidade não encontrada.', {
+                    position: "bottom-right",
+                    autoClose: 3000,
+                    pauseOnHover: true,
+                    progress: undefined,
+                    theme: "light",
+                    transition: Bounce,
+                });                
+            }
+        }catch(e){
+            console.log(`Erro: ${e}`);
+        }finally{
+            setIsLoadingData(false)
+        }
+    }
+
+    async function fetchLocationFromCep(){
+        try{
+            const res = await fetch(`https://viacep.com.br/ws/${cep}/json`);
+            const data = await res.json();
+            if(data.localidade){
+                setLocation(data.localidade);
+                setIsLocationInvalid(false);
+                toast.error('CEP não encontrado.', {
+                    position: "bottom-right",
+                    autoClose: 3000,
+                    pauseOnHover: true,
+                    progress: undefined,
+                    theme: "light",
+                    transition: Bounce,
+                });
+            }else{
+                setIsCepInvalid(true);                
+            }
+        }catch(e){
+            console.log(`Erro: ${e}`);
+        }
+    }     
 
     function handleFindWeather(e:React.MouseEvent) {
         e.preventDefault();
-        fetchWeather();
+        fetchWeatherFromLocation();
     }
 
     function handleCepChange(e:React.ChangeEvent<HTMLInputElement>){
@@ -33,9 +89,8 @@ const WeatherForm = ({cep,location,isCepInvalid,isLocationInvalid,setCep,setLoca
     
 
     function handleCep(){
-        console.log(cep);
         if(isValidCep(cep)){ 
-            fetchLocation();
+            fetchLocationFromCep();
         }else{
             setIsCepInvalid(true);
         }

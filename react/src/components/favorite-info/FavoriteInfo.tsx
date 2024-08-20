@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { WiBarometer, WiHot, WiHumidity, WiRaindrops, WiThermometer, WiThermometerExterior } from 'react-icons/wi'
 import { Bounce, toast } from 'react-toastify';
-import WindIcon from '../card/Icons/WindIcon';
 import FavoriteInfoSkeleton from './FavoriteInfoSkeleton';
-import WeatherIcon from '../card/Icons/WeatherIcon';
+import WeatherIcon from '../card/icons/WeatherIcon';
 import { ClockIcon } from '@heroicons/react/24/solid';
+import WeatherBadge from '../card/weather-badge/WeatherBadge';
 
 interface FavoriteInfoProps{
     favorites:Array<any>;
@@ -52,9 +52,6 @@ const FavoriteInfo = ({favorites}:FavoriteInfoProps) => {
             setIsLocationDataLoading(false);
         }
     }
-
-
-    console.log(favoriteLocationData);
     
     return (
         <div className='compare_container__card_wrap col-6'>
@@ -77,50 +74,58 @@ const FavoriteInfo = ({favorites}:FavoriteInfoProps) => {
                 ) : (
                     <div className='compare_container__card mt-2'>
                         <p className='compare_container_card_title'>{favoriteLocationData?.location?.name}</p>
-                        <span className='card_badge'>
-                            <WeatherIcon 
+                        <WeatherBadge 
+                            icon={<WeatherIcon 
                                 description={favoriteLocationData?.current?.weather_descriptions[0]} 
                                 isDay={favoriteLocationData?.current?.is_day}
                                 size={22}
-                            /> 
-                            <p>{favoriteLocationData?.current?.weather_descriptions}</p>
-                        </span>
-                        <span className='card_badge'>
-                            <WiThermometer size={22} />{favoriteLocationData?.current?.temperature}°C
-                            <p>Temperatura</p>
-                        </span>
-                        <span className='card_badge'>
-                            <WiHumidity size={22} />{favoriteLocationData?.current?.humidity}%
-                            <p>Umidade</p>
-                        </span>
-                        <span className='card_badge'>
-                            <WiThermometerExterior size={22} />{favoriteLocationData?.current?.feelslike}%
-                            <p>Sensação térmica</p>
-                        </span>
-                        <span className='card_badge'>
-                            <WiHot size={22} />{favoriteLocationData?.current?.uv_index}
-                            <p>Índice UV</p>
-                        </span>
-                        <span className='card_badge'>
-                            <ClockIcon width={22} /> {favoriteLocationData?.location?.localtime.split(' ')[1]}
-                            <p>Horário</p>
-                        </span>
-                        <span className='card_badge'>
-                            <WiBarometer size={24} />{favoriteLocationData?.current?.pressure} MB
-                            <p>Pressão</p>
-                        </span>
-                        <span className='card_badge'>
-                            <WiRaindrops size={22} />{favoriteLocationData?.current?.precip} MM
-                            <p>Precipitação</p>
-                        </span>
-                        <span className='card_badge'>
-                            {favoriteLocationData?.current?.wind_dir}
-                            <p>Direção do vento</p>
-                        </span>
-                        <span className='card_badge'>
-                            {favoriteLocationData?.current?.wind_speed} Km/h
-                            <p>Velocidade do vento</p>
-                        </span>
+                            />}
+                            value={favoriteLocationData?.current?.weather_descriptions}
+                            label="Condição do tempo"
+                        />
+                        <WeatherBadge 
+                            icon={<WiThermometer size={22} />}
+                            value={`${favoriteLocationData?.current?.temperature}°C`}
+                            label="Temperatura"
+                        />
+                        <WeatherBadge 
+                            icon={<WiHumidity size={22} />}
+                            value={`${favoriteLocationData?.current?.humidity}%`}
+                            label="Umidade"
+                        />
+                        <WeatherBadge 
+                            icon={<WiThermometerExterior size={22} />}
+                            value={`${favoriteLocationData?.current?.feelslike}%`}
+                            label="Sensação térmica"
+                        />
+                        <WeatherBadge 
+                            icon={<WiHot size={22} />}
+                            value={favoriteLocationData?.current?.uv_index}
+                            label="Índice UV"
+                        />
+                        <WeatherBadge 
+                            icon={<ClockIcon width={22} />}
+                            value={favoriteLocationData?.location?.localtime.split(' ')[1]}
+                            label="Horário"
+                        />
+                        <WeatherBadge 
+                            icon={<WiBarometer size={24} />}
+                            value={`${favoriteLocationData?.current?.pressure} MB`}
+                            label="Pressão"
+                        />
+                        <WeatherBadge 
+                            icon={<WiRaindrops size={22} />}
+                            value={`${favoriteLocationData?.current?.precip} MM`}
+                            label="Precipitação"
+                        />
+                        <WeatherBadge 
+                            value={favoriteLocationData?.current?.wind_dir}
+                            label="Direção do vento"
+                        />
+                        <WeatherBadge                             
+                            value={`${favoriteLocationData?.current?.wind_speed} Km/h`}
+                            label="Velocidade do vento"
+                        />
                     </div>
                 )
             ) : null}

@@ -15,8 +15,6 @@ const WeatherFinder = () => {
     const [weatherData,setWeatherData] = useState<any>(null);
     const [isLoadingData,setIsLoadingData] = useState(false);
     const [shouldShowInfo,setShouldShowInfo] = useState(false);
-    const [isCepInvalid, setIsCepInvalid] = useState<boolean>(false);
-    const [isLocationInvalid, setIsLocationInvalid] = useState<boolean>(false);
 
     const query = new URLSearchParams(useLocation().search);
 
@@ -25,77 +23,21 @@ const WeatherFinder = () => {
         if (location) {
             setLocation(location);
         }
-    }, []);
-
-
-    async function fetchWeatherFromLocation(){
-        const apiKey = import.meta.env.VITE_REACT_APP_WEATHERSTACK_API_KEY ;
-        const url = `http://api.weatherstack.com/current?access_key=${apiKey}&query=${location}`;
-        setWeatherData(null);
-        setIsLoadingData(true);
-        setShouldShowInfo(true);
-        try{
-            const res = await fetch(url);
-            const data = await res.json();
-            if(data.success!==false){
-                setIsLocationInvalid(false);
-                setWeatherData(data);
-                console.log(weatherData);
-            } else{
-                setShouldShowInfo(false)
-                setIsLocationInvalid(true);
-                toast.error('Cidade não encontrada.', {
-                    position: "bottom-right",
-                    autoClose: 3000,
-                    pauseOnHover: true,
-                    progress: undefined,
-                    theme: "light",
-                    transition: Bounce,
-                });                
-            }
-        }catch(e){
-            console.log(`Erro: ${e}`);
-        }finally{
-            setIsLoadingData(false)
-        }
-    }
-
-    async function fetchLocationFromCep(){
-        try{
-            const res = await fetch(`https://viacep.com.br/ws/${cep}/json`);
-            const data = await res.json();
-            if(data.localidade){
-                setLocation(data.localidade);
-                setIsLocationInvalid(false);
-            }else{
-                setIsCepInvalid(true);
-                toast.error('CEP não encontrado.', {
-                    position: "bottom-right",
-                    autoClose: 3000,
-                    pauseOnHover: true,
-                    progress: undefined,
-                    theme: "light",
-                    transition: Bounce,
-                });
-            }
-        }catch(e){
-            console.log(`Erro: ${e}`);
-        }
-    }     
+    }, []);  
+   
     
     return (
         <div className='wf_container'>
             <WeatherHeader/>
             <WeatherForm
                 cep={cep}
-                setCep={setCep}
-                isCepInvalid={isCepInvalid}
                 location={location}
+                weatherData={weatherData}
+                setCep={setCep}
                 setLocation={setLocation}
-                isLocationInvalid={isLocationInvalid}
-                setIsCepInvalid={setIsCepInvalid}
-                fetchWeather={fetchWeatherFromLocation}
-                fetchLocation={fetchLocationFromCep}
+                setWeatherData={setWeatherData}
+                setIsLoadingData={setIsLoadingData}
+                setShouldShowInfo={setShouldShowInfo}
             />
             {shouldShowInfo ? (!isLoadingData ? (<WeatherInfo weatherData={weatherData}/>) : (<WeatherInfoSkeleton/>) ) : null}
             
