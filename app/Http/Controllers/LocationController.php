@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Location;
+use App\Http\Requests\LocationRequest;
 
 class LocationController extends Controller
 {
@@ -12,26 +13,16 @@ class LocationController extends Controller
         return response()->json(Location::all());
     }
 
-    function store(Request $request){
-        $validator = Validator::make($request->all(), [
-            'location' => 'required|unique:locations'
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'error' => $validator->errors()->first()
-            ], 400);
-        }
-
-        $location = Location::create($request->all());
+    function store(LocationRequest $request){
+        $location = Location::create($request->validated());
         return response()->json($location, 201);
     }
 
     function delete($id){
         if(Location::destroy($id)){
-            return response()->json(['message'=>'successful-delete'],201);
+            return response()->json(['message'=>'Cidade removida dos favoritos'],201);
         }
 
-        return response()->json(['error'=>'error-delete'],400);
+        return response()->json(['error'=>'Erro ao remover cidaded os favoritos'],400);
     }
 }
