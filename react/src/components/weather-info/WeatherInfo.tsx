@@ -1,26 +1,44 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import WeatherIcon from '../card/icons/WeatherIcon';
-import { WiThermometer, WiHumidity, WiThermometerExterior, WiRaindrops, WiDaySunny, WiHot, WiBarometer } from 'react-icons/wi';
+import { WiThermometer, WiHumidity, WiThermometerExterior, WiRaindrops,  WiHot, WiBarometer } from 'react-icons/wi';
 import WeatherCard from '../card/Card';
 import { HeartIcon } from '@heroicons/react/24/outline';
+import { HeartIcon as FavIcon } from '@heroicons/react/24/solid';
 import axiosClient from '../../axios';
 import { Bounce, toast } from 'react-toastify';
-import { ClockIcon, SunIcon } from '@heroicons/react/24/outline';
+import { ClockIcon} from '@heroicons/react/24/outline';
 
 interface WeatherInfoProps{
     weatherData: any;
 }
 
 const WeatherInfo = ({weatherData}:WeatherInfoProps) => {
+    const [favorite,setFavorite] = useState(false);
+    const [favId,setFavId] = useState(null);
+
+    useEffect(()=>{
+        if(weatherData){
+            setFavorite(false);
+            axiosClient.get(`/locations/${weatherData?.location?.name}`)
+                .then((data)=>{
+                    if(data.status==201){
+                        setFavorite(true);
+                        setFavId(data.data.id);
+                    }
+                })
+                .catch((error)=>{})
+        }
+    },[weatherData])
 
     function handleAddFavorite(e:React.MouseEvent){
         e.preventDefault();
-
         axiosClient.post('/locations',{
             location: weatherData?.location?.name
         })
             .then((data)=>{
                 if(data.status==201){
+                    setFavId(data.data.id);
+                    setFavorite(true)
                     toast.success('Favoritado!', {
                         position: "bottom-right",
                         autoClose: 3000,
@@ -41,6 +59,36 @@ const WeatherInfo = ({weatherData}:WeatherInfoProps) => {
                     transition: Bounce,
                 });
             });
+    }
+
+    function handleDelete(e:React.MouseEvent){
+        e.preventDefault();
+        if(confirm(`Tem certeza que deseja remover ${weatherData?.location?.name} dos favoritos?`)){
+            removeLocationFromFavorites();
+        };
+    }
+
+    function removeLocationFromFavorites(){
+        axiosClient.delete(`/locations/${favId}`)
+        .then(({data})=>{
+            setFavorite(false);
+            toast.success(data.message, {
+                position: "bottom-right",
+                autoClose: 3000,
+                pauseOnHover: true,
+                progress: undefined,
+                theme: "light",
+                transition: Bounce,
+            });
+        })
+        .catch((error)=>{
+            console.log(error.response.data.error);
+        });
+    }
+
+
+    function handleDeleteFavorite(e:React.MouseEvent){
+        e.preventDefault();
     }
 
     return (
@@ -67,9 +115,15 @@ const WeatherInfo = ({weatherData}:WeatherInfoProps) => {
                 <WeatherCard label='Velocidade do vento' value={weatherData?.current?.wind_speed} unity='km/h' />
             </div>
             <div>
+                { !favorite ? (
                 <button className='button add_fav_button' onClick={(e)=>{handleAddFavorite(e)}}>                            
                     <p className='m-2'>Adicionar aos favoritos</p> <HeartIcon width={20}/>
                 </button>
+                ):(
+                <button className='button add_fav_button' onClick={(e)=>{handleDelete(e)}} >                            
+                    <p className='m-2' >Cidade favoritada!</p> <FavIcon width={20}/>
+                </button>
+                )}
             </div>
         </div>
   )

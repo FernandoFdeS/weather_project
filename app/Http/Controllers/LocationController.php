@@ -13,6 +13,15 @@ class LocationController extends Controller
         return response()->json(Location::all());
     }
 
+    function show($location){
+        $location =  Location::where('location',$location)->first();
+        if($location){
+            return response()->json($location, 201);
+        }
+
+        return response()->json(['error'=> 'Cidade não encontrada'], 400);
+    }
+
     function store(LocationRequest $request){
         $location = Location::create($request->validated());
         return response()->json($location, 201);
