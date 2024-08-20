@@ -5,6 +5,7 @@ import axiosClient from '../axios';
 import FavoriteItem from '../components/favorite-item/FavoriteItem';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import FavoriteInfo from '../components/favorite-info/FavoriteInfo';
 
 type ViewMode = 'favorites' | 'compare';
 
@@ -60,31 +61,8 @@ const FavoriteLocations = () => {
             }
             { viewMode==='compare' &&
             <div className='compare_container mt-2 row'>
-
-                <div className='compare_container__card_wrap col-6'>
-                    <div className='compare_container__select'>
-                        <select className='form-group form-select'>
-                            <option>Localidade 1</option>
-                        </select>
-                    </div>
-                    <div className='compare_container__card mt-2'>
-                        <p className='compare_container_card_title'>Localidade</p>
-                        <span className='card_badge'><WiThermometer size={22}/>Temperatura</span>
-                    </div>
-                </div>
-
-                <div className='compare_container__card_wrap col-6'>
-                    <div className='compare_container__select'>
-                        <select className='form-group form-select'>
-                            <option>Localidade 1</option>
-                        </select>
-                    </div>
-                    <div className='compare_container__card mt-2'>
-                        <p className='compare_container_card_title'>Localidade</p>
-                        <span className='card_badge'><WiThermometer size={22}/>Temperatura</span>
-                    </div>
-                </div>
-
+                <FavoriteInfo key={"location-1"} favorites={favorites}/>
+                <FavoriteInfo key={"location-2"} favorites={favorites}/>
             </div>
         }
         <ToastContainer />

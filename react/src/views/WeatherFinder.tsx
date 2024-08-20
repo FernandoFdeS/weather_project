@@ -27,7 +27,7 @@ const WeatherFinder = () => {
                 console.log(weatherData);
             } else{
                 setIsLocationInvalid(true);
-                toast.error('Cidade não encontrda.', {
+                toast.error('location-not-found.', {
                     position: "bottom-right",
                     autoClose: 3000,
                     pauseOnHover: true,
