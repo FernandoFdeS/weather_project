@@ -6,12 +6,14 @@ import FavoriteItem from '../components/favorite-item/FavoriteItem';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import FavoriteInfo from '../components/favorite-info/FavoriteInfo';
+import FavoriteItemSkeleton from '../components/favorite-item/FavoriteItemSkeleton';
 
 type ViewMode = 'favorites' | 'compare';
 
 const FavoriteLocations = () => {
     const [viewMode, setViewMode] = useState<ViewMode>('favorites'); 
     const [favorites,setFavorites] = useState<Array<any>>([]);
+    const [isLoadingFavorites,setIsLoadignFavorites] = useState(false);
 
     
     useEffect(()=>{
@@ -19,14 +21,17 @@ const FavoriteLocations = () => {
     },[]);
     
     function fetchFavorites (){
+        setIsLoadignFavorites(true);
         axiosClient.get('/locations')
         .then(({data})=>{
             console.log(data);
             setFavorites(data);
             console.log(favorites);
+            setIsLoadignFavorites(false);
         })
         .catch(({response})=>{
             console.log(response);
+            setIsLoadignFavorites(false);
         });
     }
 
@@ -48,14 +53,22 @@ const FavoriteLocations = () => {
             </div>
 
             { viewMode==='favorites' &&
-                <div className='favorites_list row'>
-                    {
-                        favorites && favorites.length  ?
-                        favorites.map((item)=>(
-                                <FavoriteItem key={item.id} location={item.location} id={item.id} removeFavoriteFromArray={removeFavoriteFromArray}/>                               
-                            ))
-                        : null
-                    }
+                    <div className='favorites_list row'>
+                        {!isLoadingFavorites ? (                            
+                            favorites && favorites.length  ?
+                            favorites.map((item)=>(
+                                    <FavoriteItem key={item.id} location={item.location} id={item.id} removeFavoriteFromArray={removeFavoriteFromArray}/>                               
+                                ))
+                                
+                            : null                            
+                        ):(
+                            <>
+                                <FavoriteItemSkeleton/>
+                                <FavoriteItemSkeleton/>
+                                <FavoriteItemSkeleton/>
+                            </>
+                        )}
+                    
                     
                 </div>
             }

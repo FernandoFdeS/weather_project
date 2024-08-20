@@ -225,7 +225,11 @@ body{
   margin-top: 15px;
   align-items: center;
   border-radius: 5px;
-  background-color: aliceblue;
+  background: rgba( 255, 255, 255, 0.25 );
+  box-shadow: 0 2px 2px 0 rgba( 31, 38, 135, 0.37 );
+  backdrop-filter: blur( 5.5px );
+  -webkit-backdrop-filter: blur( 5.5px );
+  border: 1px solid rgba( 255, 255, 255, 0.18 );
 }
 
 .favorite_list__item_buttons .button{
@@ -285,6 +289,7 @@ body{
   margin-top: 2px;
   border-radius: 25px;
   width: 100%;
+  justify-content: center;
 }
 
 .card_badge p{
@@ -299,6 +304,40 @@ body{
   background: linear-gradient(-90deg, #f5f5f5 0%, #e0e0e0 50%, #f5f5f5 100%);
   background-size: 400% 400%;
   animation: pulse 1.2s ease-in-out infinite;
+}
+
+.button_skeleton{
+  width: 38px;
+  height: 38px;
+  border: 1px solid gainsboro;
+  border-radius: 8px;
+  padding: 10px;
+  margin-left: 5px;
+}
+
+.span_skeleton{
+  height: 28px;
+  width: 40%;
+  border: 1px solid gainsboro;
+  border-radius: 5px;
+  animation-delay: 150ms;
+}
+
+.card_title_skeleton{
+  width: 100%;
+  height: 30px;
+  font-size: 20px;
+  display: block;
+  margin: 0px;
+}
+
+
+.card_badge_skeleton{
+  width: 100%;
+  background-color: red;
+  content: '';
+  height: 42px !important;
+  border-radius: 50px;
 }
 
 @keyframes pulse {
