@@ -10,6 +10,10 @@ interface WeatherIconProps {
 }
 
 const WeatherIcon = ({ description,size,isDay }:WeatherIconProps) => {
+    if (description == undefined){
+        return null;
+    }
+
     const desc = description.trim().toLowerCase();
     console.log(isDay);
     switch (desc) {

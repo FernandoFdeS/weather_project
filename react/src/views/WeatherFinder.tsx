@@ -1,11 +1,12 @@
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import WeatherForm from '../components/weather-form/WeatherForm';
 import WeatherHeader from '../components/header/Header';
 import WeatherInfo from '../components/weather-info/WeatherInfo';
 import { ToastContainer, Bounce, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import WeatherInfoSkeleton from '../components/weather-info/WeatherInfoSkeleton';
+import { useLocation } from 'react-router-dom';
 
 const WeatherFinder = () => {
 
@@ -16,6 +17,16 @@ const WeatherFinder = () => {
     const [shouldShowInfo,setShouldShowInfo] = useState(false);
     const [isCepInvalid, setIsCepInvalid] = useState<boolean>(false);
     const [isLocationInvalid, setIsLocationInvalid] = useState<boolean>(false);
+
+    const query = new URLSearchParams(useLocation().search);
+
+    useEffect(() => {
+        const location = query.get('location');
+        if (location) {
+            setLocation(location);
+        }
+    }, []);
+
 
     async function fetchWeatherFromLocation(){
         const apiKey = import.meta.env.VITE_REACT_APP_WEATHERSTACK_API_KEY ;
