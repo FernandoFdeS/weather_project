@@ -182,8 +182,7 @@ body{
 }
 
 .favorites_containter{
-  width: 420px;
-  min-width: 320px;
+  width: 720px;
 }
 
 .favorites_select{
@@ -349,8 +348,18 @@ body{
   }
 }
 
+@media(max-width:740px){
+  .favorites_containter{
+    width: 90vw;
+  }
+}
+
 @media (max-width: 420px) {
   .wf_header{
     margin-top: 20px;
+  }
+
+  .wf_header__button{
+    position: relative;
   }
 }
