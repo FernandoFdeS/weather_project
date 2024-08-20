@@ -1,5 +1,4 @@
-import React from 'react';
-import { WiDaySunny, WiDayCloudy, WiCloud, WiDayHaze, WiRain, WiDayShowers, WiFog, WiNightAltCloudy, WiNightClear, WiNightCloudy, WiNightShowers, WiWindy } from 'react-icons/wi';
+import { WiDaySunny, WiDayCloudy, WiCloud, WiRain, WiDayShowers, WiFog, WiNightAltCloudy, WiNightClear, WiNightCloudy, WiNightShowers } from 'react-icons/wi';
 
 
 

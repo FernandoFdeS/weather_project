@@ -1,5 +1,4 @@
-import React from 'react';
-import { MagnifyingGlassIcon, StarIcon } from '@heroicons/react/24/solid';
+import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
 import { VscThreeBars } from 'react-icons/vsc';
 import { Link, useLocation } from 'react-router-dom';
 

@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { WiBarometer, WiHot, WiHumidity, WiRaindrops, WiThermometer, WiThermometerExterior } from 'react-icons/wi'
 import { Bounce, toast } from 'react-toastify';
 import FavoriteInfoSkeleton from './FavoriteInfoSkeleton';
-import WeatherIcon from '../card/icons/WeatherIcon';
+import WeatherIcon from '../icons/WeatherIcon';
 import { ClockIcon } from '@heroicons/react/24/solid';
-import WeatherBadge from '../card/weather-badge/WeatherBadge';
+import WeatherBadge from '../weather-badge/WeatherBadge';
 
 interface FavoriteInfoProps{
     favorites:Array<any>;

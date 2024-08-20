@@ -1,9 +1,9 @@
 
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import WeatherForm from '../components/weather-form/WeatherForm';
 import WeatherHeader from '../components/header/Header';
 import WeatherInfo from '../components/weather-info/WeatherInfo';
-import { ToastContainer, Bounce, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import WeatherInfoSkeleton from '../components/weather-info/WeatherInfoSkeleton';
 import { useLocation } from 'react-router-dom';

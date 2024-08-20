@@ -1,5 +1,5 @@
 import MagnifyingGlassIcon from '@heroicons/react/24/solid/MagnifyingGlassIcon';
-import React, { ChangeEvent, useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Bounce, toast } from 'react-toastify';
 
 
@@ -14,7 +14,7 @@ interface WeatherFormProps {
     setShouldShowInfo: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const WeatherForm = ({cep,location,weatherData,setCep,setLocation,setWeatherData,setIsLoadingData,setShouldShowInfo}:WeatherFormProps) => {
+const WeatherForm = ({cep,location,setCep,setLocation,setWeatherData,setIsLoadingData,setShouldShowInfo}:WeatherFormProps) => {
     const [isCepInvalid, setIsCepInvalid] = useState<boolean>(false);
     const [isLocationInvalid, setIsLocationInvalid] = useState<boolean>(false);
 

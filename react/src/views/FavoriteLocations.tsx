@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import WeatherHeader from '../components/header/Header'
-import { WiThermometer } from 'react-icons/wi';
 import axiosClient from '../axios';
 import FavoriteItem from '../components/favorite-item/FavoriteItem';
 import { ToastContainer } from 'react-toastify';
@@ -27,8 +26,9 @@ const FavoriteLocations = () => {
             setFavorites(data);
             setIsLoadignFavorites(false);
         })
-        .catch(({response})=>{
+        .catch(({error})=>{
             setIsLoadignFavorites(false);
+            console.log(error);
         });
     }
 

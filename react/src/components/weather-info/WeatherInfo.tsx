@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import WeatherIcon from '../card/icons/WeatherIcon';
+import WeatherIcon from '../icons/WeatherIcon';
 import { WiThermometer, WiHumidity, WiThermometerExterior, WiRaindrops,  WiHot, WiBarometer } from 'react-icons/wi';
 import WeatherCard from '../card/Card';
 import { HeartIcon } from '@heroicons/react/24/outline';
@@ -26,7 +26,9 @@ const WeatherInfo = ({weatherData}:WeatherInfoProps) => {
                         setFavId(data.data.id);
                     }
                 })
-                .catch((error)=>{})
+                .catch((error)=>{
+                    console.log(error);
+                })
         }
     },[weatherData])
 
