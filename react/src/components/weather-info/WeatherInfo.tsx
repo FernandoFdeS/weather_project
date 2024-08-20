@@ -33,7 +33,8 @@ const WeatherInfo = ({weatherData}:WeatherInfoProps) => {
                 console.log(data);
             })
             .catch((error)=>{
-                toast.info(error.response.data.error, {
+                console.log(error);
+                toast.info(error.response.data.message, {
                     position: "bottom-right",
                     autoClose: 3000,
                     pauseOnHover: true,
@@ -64,8 +65,7 @@ const WeatherInfo = ({weatherData}:WeatherInfoProps) => {
             </div>
             <div>
                 <button className='button add_fav_button' onClick={(e)=>{handleAddFavorite(e)}}>                            
-                    <p className='m-2'>Adicionar aos favoritos</p>                           
-                    <HeartIcon width={20}/>
+                    <p className='m-2'>Adicionar aos favoritos</p> <HeartIcon width={20}/>
                 </button>
             </div>
         </div>

@@ -58,7 +58,7 @@ const FavoriteInfo = ({favorites}:FavoriteInfoProps) => {
         <div className='compare_container__card_wrap col-6'>
             <div className='compare_container__select'>
                 <select className='form-group form-select' onChange={(e) => handleSelect(e)}>
-                    <option value='' disabled selected>choose-location</option>
+                    <option value='' disabled selected>Escolha uma cidade</option>
                     {favorites && favorites.length ? (
                         favorites.map((item) => (
                             <option key={item.id} value={item.location}>
@@ -77,27 +77,27 @@ const FavoriteInfo = ({favorites}:FavoriteInfoProps) => {
                         <p className='compare_container_card_title'>{favoriteLocationData?.location?.name}</p>
                         <span className='card_badge'>
                             <WiThermometer size={22} />{favoriteLocationData?.current?.temperature}°C
-                            <p>temperature</p>
+                            <p>Temperatura</p>
                         </span>
                         <span className='card_badge'>
                             <WiHumidity size={22} />{favoriteLocationData?.current?.humidity}%
-                            <p>humidity</p>
+                            <p>Umidade</p>
                         </span>
                         <span className='card_badge'>
                             <WiThermometerExterior size={22} />{favoriteLocationData?.current?.feelslike}%
-                            <p>feelslike</p>
+                            <p>Sensação térmica</p>
                         </span>
                         <span className='card_badge'>
                             <WiRaindrops size={22} />{favoriteLocationData?.current?.precip}%
-                            <p>precipitation</p>
+                            <p>Precipitação</p>
                         </span>
                         <span className='card_badge'>
                             {favoriteLocationData?.current?.wind_dir}
-                            <p>wind-direction</p>
+                            <p>Direção do vento</p>
                         </span>
                         <span className='card_badge'>
                             {favoriteLocationData?.current?.wind_speed} Km/h
-                            <p>wind-speed</p>
+                            <p>Velocidade do vento</p>
                         </span>
                     </div>
                 )

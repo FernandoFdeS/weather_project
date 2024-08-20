@@ -31,15 +31,16 @@ const WeatherFinder = () => {
                 setWeatherData(data);
                 console.log(weatherData);
             } else{
+                setShouldShowInfo(false)
                 setIsLocationInvalid(true);
-                toast.error('location-not-found.', {
+                toast.error('Cidade não encontrada.', {
                     position: "bottom-right",
                     autoClose: 3000,
                     pauseOnHover: true,
                     progress: undefined,
                     theme: "light",
                     transition: Bounce,
-                });
+                });                
             }
         }catch(e){
             console.log(`Erro: ${e}`);
@@ -57,7 +58,7 @@ const WeatherFinder = () => {
                 setIsLocationInvalid(false);
             }else{
                 setIsCepInvalid(true);
-                toast.error('zip-code-not-found.', {
+                toast.error('CEP não encontrado.', {
                     position: "bottom-right",
                     autoClose: 3000,
                     pauseOnHover: true,

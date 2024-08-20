@@ -14,7 +14,7 @@ const FavoriteItem = ({id,location,removeFavoriteFromArray}:FavoriteItemProps) =
     
     function handleDelete(e:React.MouseEvent){
         e.preventDefault();
-        if(confirm('delete-message')){
+        if(confirm(`Tem certeza que deseja remover ${location} dos favoritos?`)){
             removeLocationFromFavorites();
         };
     }
