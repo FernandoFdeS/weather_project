@@ -5,12 +5,15 @@ import WeatherHeader from '../components/header/Header';
 import WeatherInfo from '../components/weather-info/WeatherInfo';
 import { ToastContainer, Bounce, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import WeatherInfoSkeleton from '../components/weather-info/WeatherInfoSkeleton';
 
 const WeatherFinder = () => {
 
     const [cep,setCep] = useState<string>('');
     const [location,setLocation] = useState<string>('');
     const [weatherData,setWeatherData] = useState<any>(null);
+    const [isLoadingData,setIsLoadingData] = useState(false);
+    const [shouldShowInfo,setShouldShowInfo] = useState(false);
     const [isCepInvalid, setIsCepInvalid] = useState<boolean>(false);
     const [isLocationInvalid, setIsLocationInvalid] = useState<boolean>(false);
 
@@ -18,6 +21,8 @@ const WeatherFinder = () => {
         const apiKey = import.meta.env.VITE_REACT_APP_WEATHERSTACK_API_KEY ;
         const url = `http://api.weatherstack.com/current?access_key=${apiKey}&query=${location}`;
         setWeatherData(null);
+        setIsLoadingData(true);
+        setShouldShowInfo(true);
         try{
             const res = await fetch(url);
             const data = await res.json();
@@ -38,6 +43,8 @@ const WeatherFinder = () => {
             }
         }catch(e){
             console.log(`Erro: ${e}`);
+        }finally{
+            setIsLoadingData(false)
         }
     }
 
@@ -50,7 +57,7 @@ const WeatherFinder = () => {
                 setIsLocationInvalid(false);
             }else{
                 setIsCepInvalid(true);
-                toast.error('CEP não encontrado.', {
+                toast.error('zip-code-not-found.', {
                     position: "bottom-right",
                     autoClose: 3000,
                     pauseOnHover: true,
@@ -78,7 +85,8 @@ const WeatherFinder = () => {
                 fetchWeather={fetchWeatherFromLocation}
                 fetchLocation={fetchLocationFromCep}
             />
-            {weatherData && <WeatherInfo weatherData={weatherData}/>}
+            {shouldShowInfo ? (!isLoadingData ? (<WeatherInfo weatherData={weatherData}/>) : (<WeatherInfoSkeleton/>) ) : null}
+            
             <ToastContainer />
         </div>
     )

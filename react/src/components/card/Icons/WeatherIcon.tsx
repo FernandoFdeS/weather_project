@@ -9,8 +9,9 @@ interface WeatherIconProps {
 }
 
 const WeatherIcon = ({ description,size }:WeatherIconProps) => {
-    const desc = description.toLowerCase();
-      
+    const desc = description.trim().toLowerCase();
+   
+    console.log(desc);
     switch (desc) {
         case 'clear':
         case 'sunny':
@@ -29,6 +30,8 @@ const WeatherIcon = ({ description,size }:WeatherIconProps) => {
             return <WiDayShowers size={size}/>;
           case 'mist':
             return <WiFog size={size}/>;
+          case 'fog':
+            return <WiFog size={size} />;
           default:
             return null; // Para condições não cobertas
         }

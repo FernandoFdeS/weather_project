@@ -2,7 +2,6 @@ import React from 'react'
 import WeatherIcon from '../card/Icons/WeatherIcon';
 import { WiThermometer, WiHumidity, WiThermometerExterior, WiRaindrops } from 'react-icons/wi';
 import WeatherCard from '../card/Card';
-import WindIcon from '../card/Icons/WindIcon';
 import { HeartIcon } from '@heroicons/react/24/outline';
 import axiosClient from '../../axios';
 import { Bounce, toast } from 'react-toastify';
@@ -22,7 +21,7 @@ const WeatherInfo = ({weatherData}:WeatherInfoProps) => {
         })
             .then((data)=>{
                 if(data.status==201){
-                    toast.success('added-favorites', {
+                    toast.success('added to favorites', {
                         position: "bottom-right",
                         autoClose: 3000,
                         pauseOnHover: true,
@@ -49,17 +48,18 @@ const WeatherInfo = ({weatherData}:WeatherInfoProps) => {
         <div className='wf_content'>
             <div className='wf_content__location'>
                 <div>
-                    <h3 className='wf_content__location_title'>{weatherData?.request?.query}</h3>
-                    <p className='wf_content__location_weather_description'>{weatherData?.current?.weather_descriptions}</p>
+                    <h3 className='wf_content__location_title'>{weatherData?.location?.name}</h3>
+                    <p className='wf_content__location_weather_description'>{weatherData?.current?.weather_descriptions}
+                    <WeatherIcon description={weatherData?.current?.weather_descriptions[0]} size={25}/> </p>
                 </div>
-                <WeatherIcon description={weatherData?.current?.weather_descriptions[0]} size={42}/>                   
+                                  
             </div>
             <div className='wf_content__weather_info'>
                 <WeatherCard icon={<WiThermometer size={72} />} label='Temperatura' value={`${weatherData?.current?.temperature}°C`} />
                 <WeatherCard icon={<WiHumidity size={72} />} label='Umidade' value={weatherData?.current?.humidity} />
                 <WeatherCard icon={<WiThermometerExterior size={72} />} label='Sensação térmica' value={`${weatherData?.current?.feelslike}°C`} />
                 <WeatherCard icon={<WiRaindrops size={72} />} label='Precipitação' value={`${weatherData?.current?.precip} mm`} />
-                <WeatherCard icon={<WindIcon windDirection={weatherData?.current?.wind_dir} />} label='Direção do vento' />
+                <WeatherCard label='Direção do vento' value={weatherData?.current?.wind_dir}/>
                 <WeatherCard label='Velocidade do vento' value={`${weatherData?.current?.wind_speed} km/h`} />
             </div>
             <div>
