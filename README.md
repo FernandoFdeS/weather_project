@@ -50,6 +50,9 @@ Para executar o front-end:
 
 ### Outras considerações
 Poderia ter estruturado melhor o projeto, acredito que existem algumas partes que podem ser quebradas em componentes menores ainda.
+
 Na parte dos estilos, como citado anteriormente, tentei seguir o padrão de nomenclatura de classes *BEM*, mas, com o perdão do trocadilho, acho que não segui tão bem assim.
+
 A parte do back-end é relativamente pequena, fiquei até com a impressão de ter esquecido de algo.
+
 Para um projeto simples assim talvez o uso do Laravel pareça um exagero, mas em um cenário onde o projeto aumenta de tamanho/complexidade o Laravel conseguiria lidar muito bem com a situação. 
