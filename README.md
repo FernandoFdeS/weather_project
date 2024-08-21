@@ -2,7 +2,7 @@
 # WeatherAPP
 Projeto de aplicação para consulta e comparação de clima em diferentes localidades. 
 
-![](gif_aplicacao.gif)
+[](gif_aplicacao.gif)
 
 ### Frameworks e Tecnologias Utilizadas
 - **React** (18.3.1)
@@ -30,7 +30,7 @@ Projeto de aplicação para consulta e comparação de clima em diferentes local
 
 - **Banco de Dados**
 	- A estrutura do banco também é relativamente simples, possui apenas uma tabela, *Location*, que salva as localizações/cidades que foram favoritadas.
-	[](estrutura_tabela.png)
+    - ![](estrutura_tabela.png)
 
 ### Configuração
 Antes de configurar o projeto, é necessário fazer a instalação do [React](https://pt-br.react.dev/learn/start-a-new-react-project) , do [PHP](https://www.php.net/manual/en/install.php) e do [Composer](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-macos).
