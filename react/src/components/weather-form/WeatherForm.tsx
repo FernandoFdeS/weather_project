@@ -1,6 +1,7 @@
 import MagnifyingGlassIcon from '@heroicons/react/24/solid/MagnifyingGlassIcon';
 import React, { useState } from 'react'
 import { Bounce, toast } from 'react-toastify';
+import axiosClient from '../../axios';
 
 
 interface WeatherFormProps {
@@ -23,20 +24,22 @@ const WeatherForm = ({cep,location,setCep,setLocation,setWeatherData,setIsLoadin
         return regex.test(cep);
     };
 
-    async function fetchWeatherFromLocation(){
+    function fetchWeatherFromLocation(){
         const apiKey = import.meta.env.VITE_REACT_APP_WEATHERSTACK_API_KEY ;
         const url = `http://api.weatherstack.com/current?access_key=${apiKey}&query=${location}`;
         setWeatherData(null);
         setIsLoadingData(true);
-        setShouldShowInfo(true);
-        try{
-            const res = await fetch(url);
-            const data = await res.json();
-            if(data.success!==false){
+        setShouldShowInfo(false);
+
+        axiosClient.get(url)
+        .then(({data})=>{
+            console.log(data);
+            if(data.success!=false){
                 setIsLocationInvalid(false);
                 setWeatherData(data);
-            } else{
-                setShouldShowInfo(false)
+                setShouldShowInfo(true);
+            }else{
+                setShouldShowInfo(false);
                 setIsLocationInvalid(true);
                 toast.error('Cidade não encontrada.', {
                     position: "bottom-right",
@@ -45,36 +48,37 @@ const WeatherForm = ({cep,location,setCep,setLocation,setWeatherData,setIsLoadin
                     progress: undefined,
                     theme: "light",
                     transition: Bounce,
-                });                
+                });   
             }
-        }catch(e){
-            console.log(`Erro: ${e}`);
-        }finally{
-            setIsLoadingData(false)
-        }
+        }).catch((error)=>{
+            setShouldShowInfo(false);
+            console.log(error);
+        }).finally(()=>{
+            setIsLoadingData(false);
+        });
     }
 
-    async function fetchLocationFromCep(){
-        try{
-            const res = await fetch(`https://viacep.com.br/ws/${cep}/json`);
-            const data = await res.json();
-            if(data.localidade){
-                setLocation(data.localidade);
-                setIsLocationInvalid(false);                
-            }else{
-                setIsCepInvalid(true); 
-                toast.error('CEP não encontrado.', {
-                    position: "bottom-right",
-                    autoClose: 3000,
-                    pauseOnHover: true,
-                    progress: undefined,
-                    theme: "light",
-                    transition: Bounce,
-                });               
-            }
-        }catch(e){
-            console.log(`Erro: ${e}`);
-        }
+    function fetchLocationFromCep(){
+        axiosClient.get(`https://viacep.com.br/ws/${cep}/json`)
+            .then(({data})=>{
+                console.log(data);
+                if(data.localidade){
+                    setLocation(data.localidade);
+                    setIsLocationInvalid(false);                
+                }else{
+                    setIsCepInvalid(true); 
+                    toast.error('CEP não encontrado.', {
+                        position: "bottom-right",
+                        autoClose: 3000,
+                        pauseOnHover: true,
+                        progress: undefined,
+                        theme: "light",
+                        transition: Bounce,
+                    });               
+                }
+            }).catch((error)=>{
+                console.log(error);
+            });
     }     
 
     function handleFindWeather(e:React.MouseEvent) {

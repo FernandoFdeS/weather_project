@@ -5,6 +5,7 @@ import FavoriteInfoSkeleton from './FavoriteInfoSkeleton';
 import WeatherIcon from '../icons/WeatherIcon';
 import { ClockIcon } from '@heroicons/react/24/solid';
 import WeatherBadge from '../weather-badge/WeatherBadge';
+import axiosClient from '../../axios';
 
 interface FavoriteInfoProps{
     favorites:Array<any>;
@@ -26,32 +27,32 @@ const FavoriteInfo = ({favorites}:FavoriteInfoProps) => {
         }
     }, [currentFavoriteLocation]);
 
-    async function fetchFavoriteLocationData(){
+    function fetchFavoriteLocationData(){
         const apiKey = import.meta.env.VITE_REACT_APP_WEATHERSTACK_API_KEY ;
         const url = `http://api.weatherstack.com/current?access_key=${apiKey}&query=${currentFavoriteLocation}`;
         
         setFavoriteLocationData(null);
-        try{
-            const res = await fetch(url);
-            const data = await res.json();
-            if(data.success!==false){
-                setFavoriteLocationData(data);
-            } else{
-                toast.error('location-not-found.', {
-                    position: "bottom-right",
-                    autoClose: 3000,
-                    pauseOnHover: true,
-                    progress: undefined,
-                    theme: "light",
-                    transition: Bounce,
-                });
-            }
-        }catch(e){
-            console.log(`Erro: ${e}`);
-        }finally{
-            setIsLocationDataLoading(false);
-        }
+        axiosClient.get(url)
+            .then(({data})=>{
+                if(data.success!==false){
+                    setFavoriteLocationData(data);
+                } else{
+                    toast.error('location-not-found.', {
+                        position: "bottom-right",
+                        autoClose: 3000,
+                        pauseOnHover: true,
+                        progress: undefined,
+                        theme: "light",
+                        transition: Bounce,
+                    });
+                } 
+            }).catch((error)=>{
+                console.log(`Erro: ${error}`);
+            }).finally(()=>{
+                setIsLocationDataLoading(false);
+            });
     }
+    
     
     return (
         <div className='compare_container__card_wrap col-6'>
