@@ -2,7 +2,7 @@
 # WeatherAPP
 Projeto de aplicação para consulta e comparação de clima em diferentes localidades. 
 
-[](gif_aplicacao.gif)
+![](gif_aplicacao.gif)
 
 ### Frameworks e Tecnologias Utilizadas
 - **React** (18.3.1)
