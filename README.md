@@ -4,6 +4,8 @@ Projeto de aplicação para consulta e comparação de clima em diferentes local
 
 ![](gif_aplicacao.gif)
 
+<sup>Talvez a qualidade do gif não tenha ficado tão boa, então aqui tem um [link](https://youtu.be/JiwP2qAOjQM) para um vídeo de uma pequena demonstração da aplicação.</sup>
+
 ### Frameworks e Tecnologias Utilizadas
 - **React** (18.3.1)
 - **Laravel** (11)
